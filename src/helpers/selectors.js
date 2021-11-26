@@ -8,10 +8,10 @@ export function getAppointmentsForDay(state, day) {
       appointmentsByDay = stateDay.appointments;
     }
   }
-  if(appointmentsByDay) {
-    for(const appointmentId of appointmentsByDay) {
-      appointmentsArr.push(state.appointments[appointmentId]);
-    }
-  }
+   if(appointmentsByDay) {
+     for(const appointmentId of appointmentsByDay) {
+       appointmentsArr.push(state.appointments.data[appointmentId]);
+     }
+   }
   return appointmentsArr;
 }
