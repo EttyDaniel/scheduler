@@ -21,7 +21,7 @@ export default function Application(props) {
   const interviewersByDay = getInterviewersForDay(state, state.day);
   
   const schedule = dailyAppointments.map((appointment) => {
-    const interview = getInterview(state,appointment.interview);
+  const interview = getInterview(state,appointment.interview);
     return (
       <Appointment
         key={appointment.id}
@@ -53,9 +53,7 @@ export default function Application(props) {
 
   // Will aloow us to change the local state when we book an interview
   function bookInterview(id, interview) {
-    // console.log(state.appointments[id]);
-    // console.log(id, interview);
-
+    console.log("interview and Id", id, interview)
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -64,11 +62,12 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-    // console.log("Appointments: ", appointments);
-    // console.log("b4 changing: ",state);
+
     setState({...state, appointments});
-    // axios.put("/api/appointments/:id")
-    //   .then();
+    return axios.put(`/api/appointments/${id}`, {interview})
+        .then(response => {
+          setState({...state, appointments});
+        });
   }
 
   
