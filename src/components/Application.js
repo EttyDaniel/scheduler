@@ -5,7 +5,7 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "./DayList";
 import "components/Appointment";
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 
 export default function Application(props) {
@@ -18,14 +18,20 @@ export default function Application(props) {
   });
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-
+  const interviewersByDay = getInterviewersForDay(state, state.day);
+  
   const schedule = dailyAppointments.map((appointment) => {
+    const interview = getInterview(state,appointment.interview);
     return (
       <Appointment
         key={appointment.id}
         id={appointment.id}
         time={appointment.time}
-        interview={appointment.interview}
+        //interview={appointment.interview}
+        interview={interview}
+        interviewers={interviewersByDay}
+        bookInterview={bookInterview}
+        //{...appointment}
       />
     );
   });
@@ -40,10 +46,32 @@ export default function Application(props) {
       axios.get("/api/appointments"),
       axios.get("/api/interviewers")
   ]).then((all) => {
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1], interviewers: all[2]}));
+      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
     });
 
   }, []);
+
+  // Will aloow us to change the local state when we book an interview
+  function bookInterview(id, interview) {
+    // console.log(state.appointments[id]);
+    // console.log(id, interview);
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    // console.log("Appointments: ", appointments);
+    // console.log("b4 changing: ",state);
+    setState({...state, appointments});
+    // axios.put("/api/appointments/:id")
+    //   .then();
+  }
+
+  
 
   return (
     <main className="layout">
@@ -68,14 +96,17 @@ export default function Application(props) {
       />
       </section>
       <section className="schedule">
-        {dailyAppointments.map(appointment => {
+        {/* {dailyAppointments.map(appointment => {
           return (
             <Appointment 
               key={appointment.id}
               {...appointment}
+              interviewers={interviewersByDay}
+              bookInterview={bookInterview}
             />
           );
-        })}
+        })} */}
+        {schedule}
         {<Appointment key="last" time="5pm" />}
       </section>
     </main>
