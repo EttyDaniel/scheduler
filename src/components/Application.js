@@ -21,19 +21,20 @@ export default function Application(props) {
   const interviewersByDay = getInterviewersForDay(state, state.day);
   
   const schedule = dailyAppointments.map((appointment) => {
-  const interview = getInterview(state,appointment.interview);
-    return (
-      <Appointment
-        key={appointment.id}
-        id={appointment.id}
-        time={appointment.time}
-        //interview={appointment.interview}
-        interview={interview}
-        interviewers={interviewersByDay}
-        bookInterview={bookInterview}
-        //{...appointment}
-      />
-    );
+    const interview = getInterview(state,appointment.interview);
+      return (
+        <Appointment
+          key={appointment.id}
+          id={appointment.id}
+          time={appointment.time}
+          //interview={appointment.interview}
+          interview={interview}
+          interviewers={interviewersByDay}
+          bookInterview={bookInterview}
+          cancelInterview={cancelInterview}
+          //{...appointment}
+        />
+      );
   });
 
   const setDay = day => setState({ ...state, day });
@@ -53,7 +54,7 @@ export default function Application(props) {
 
   // Will aloow us to change the local state when we book an interview
   function bookInterview(id, interview) {
-    console.log("interview and Id", id, interview)
+    //console.log("interview and Id", id, interview)
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -71,6 +72,22 @@ export default function Application(props) {
   }
 
   
+  function cancelInterview(id) {
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.delete(`/api/appointments/${id}`)
+        .then(response => {
+          setState({...state, appointments});
+        });
+  }
 
   return (
     <main className="layout">
@@ -95,16 +112,6 @@ export default function Application(props) {
       />
       </section>
       <section className="schedule">
-        {/* {dailyAppointments.map(appointment => {
-          return (
-            <Appointment 
-              key={appointment.id}
-              {...appointment}
-              interviewers={interviewersByDay}
-              bookInterview={bookInterview}
-            />
-          );
-        })} */}
         {schedule}
         {<Appointment key="last" time="5pm" />}
       </section>
