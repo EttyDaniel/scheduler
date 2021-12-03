@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-
+/*
+transition(DELETE)
+["EMPTY","CREATE","SHOW"]
+*/
 export default function useVisualMode(initial){
 
   const [mode, setMode] = useState(initial);
@@ -7,12 +10,16 @@ export default function useVisualMode(initial){
 
   function transition(newMode, replace = false) {
     if (replace){
-      return setMode(newMode);
+      setHistory((prev) => {
+        return [...prev.slice(0,prev.length-1),newMode ];
+      });
+      setMode(newMode);
+    } else {
+        setMode(newMode);
+        setHistory((prev) => {
+          return [...prev, newMode];
+        });
     }
-    setMode(newMode);
-    setHistory((prev) => {
-      return [...prev, newMode];
-    });
   };
   
   function back() {
