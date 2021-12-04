@@ -19,9 +19,11 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-
+  //console.log("This is state",state);
+  //console.log("This is interview", interview);
       if(interview) {
         let interviewerId = interview.interviewer;
+        
         let interviewObj = {
           student: interview.student,
           interviewer : {

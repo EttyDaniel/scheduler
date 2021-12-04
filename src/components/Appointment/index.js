@@ -37,9 +37,7 @@ export default function Appointment(props) {
       transition(ERROR_SAVE, true)
     });
   }
-/*
-[SHOW,CONFIRM,ERROR_DELETING]
-*/
+
   //is called after confirming that we want to delete
   function destroy() {
     transition(DELETING,true);
@@ -64,12 +62,11 @@ export default function Appointment(props) {
     <article 
     className="appointment" id={props.id}>
       <Header time={props.time}/>
-      {/* {interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer}/> : <Empty/>} */}
       {mode === EMPTY && <Empty onAdd={() => transition("CREATE")} />}
       {mode === SHOW && (
       <Show
         student={props.interview.student}
-        interviewer={props.interview.interviewer}
+        interviewer={props.interview.interviewer || {}}
         onDelete={confirm}
         onEdit={edit}
       />)}

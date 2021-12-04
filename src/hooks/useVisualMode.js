@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-/*
-transition(DELETE)
-["EMPTY","CREATE","SHOW"]
-*/
+
 export default function useVisualMode(initial){
 
   const [mode, setMode] = useState(initial);
