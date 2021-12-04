@@ -22,23 +22,18 @@ export default function Application(props) {
   
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state,appointment.interview);
-    console.log("interview is : ", interview);
       return (
         <Appointment
           key={appointment.id}
           id={appointment.id}
           time={appointment.time}
-          //interview={appointment.interview}
           interview={interview}
           interviewers={interviewersByDay}
           bookInterview={bookInterview}
           cancelInterview={cancelInterview}
-          //{...appointment}
         />
       );
   });
-
-  
 
   return (
     <main className="layout">
