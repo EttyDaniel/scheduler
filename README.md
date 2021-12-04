@@ -1,6 +1,5 @@
 # Interview Scheduler
 
-Description : 
 Scheduler is a React project which allows users to add, cancel and edit appointments.
 Each appointment creation is set with a day, a time, a student's name and an interviewer's name.
 Each day holds 5 spots total and our app shows the spots left for each day.
