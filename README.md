@@ -7,6 +7,8 @@ Each day holds 5 spots total and our app shows the spots left for each day.
 
 Here is a snap shot of the app's view on the browser : 
 
+## Screenshots
+!["Scheduler"](docs/Scheduler.png)
 
 
 
