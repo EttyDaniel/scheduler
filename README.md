@@ -10,7 +10,6 @@ Here is a snap shot of the app's view on the browser :
 ## Screenshots
 !["Scheduler"](docs/Scheduler.png)
 
-(docs/Scheduler.png)
 
 ## Setup
 
