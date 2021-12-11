@@ -10,6 +10,7 @@ import useApplicationData, {state, setDay, bookInterview, cancelInterview} from 
 
 export default function Application(props) {
 
+  //using our custome hook
   const {
     state,
     setDay,
@@ -20,6 +21,7 @@ export default function Application(props) {
   const interviewersByDay = getInterviewersForDay(state, state.day);
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   
+  //returning all appointments per day 
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state,appointment.interview);
       return (

@@ -29,7 +29,6 @@ export default function useApplicationData() {
   const updateSpots = function(id,days,value) {
 
       for(const dayId in days) {
-        console.log("hi", days)
         if(days[dayId].appointments.includes(id)){
           days[dayId].spots += value;        
       }
@@ -37,7 +36,7 @@ export default function useApplicationData() {
   }
 
   // Will aloow us to change the local state when we book an interview
-  function bookInterview(id, interview) {
+  function bookInterview(id, interview, mode) {
     if(!interview.interviewer){
       return Promise.reject("No interviewer was selected");
     }
@@ -50,7 +49,11 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-    updateSpots(id,state.days,-1);
+    //Need to update spots if it's not edit
+    if(mode !== "EDIT") {
+      updateSpots(id,state.days,-1);
+    }
+    
     
     return axios.put(`/api/appointments/${id}`, {interview})
         .then(response => {
@@ -58,6 +61,7 @@ export default function useApplicationData() {
         });
   }
 
+  // Will aloow us to cancel an interview
   function cancelInterview(id) {
 
     const appointment = {

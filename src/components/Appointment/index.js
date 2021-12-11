@@ -25,13 +25,15 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
+  //Saving a change or a new appointment
   function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer
     };
+    //After creating a new interview object we want to transition to SAVING
     transition(SAVING);
-    props.bookInterview(props.id,interview)
+    props.bookInterview(props.id,interview, mode)
     .then( () => {transition(SHOW)})
     .catch( () => {
       transition(ERROR_SAVE, true)
@@ -57,7 +59,7 @@ export default function Appointment(props) {
     
   }
 
-  console.log("interview",props.interview);
+  //Conditional view based on mode
   return (
     <article 
     className="appointment" id={props.id}>

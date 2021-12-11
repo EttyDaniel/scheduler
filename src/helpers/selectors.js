@@ -13,7 +13,6 @@ export function getAppointmentsForDay(state, day) {
        appointmentsArr.push(state.appointments[appointmentId]);
      }
    }
-   console.log("appointments", appointmentsArr);
    
   return appointmentsArr;
 }
@@ -49,6 +48,5 @@ export function getInterviewersForDay(state, day) {
       interviewersArr.push(state.interviewers[interviewId]);
      }
    }
-   console.log("interview", interviewersArr);
   return interviewersArr;
 }
