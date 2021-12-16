@@ -62,7 +62,8 @@ export default function Appointment(props) {
   //Conditional view based on mode
   return (
     <article 
-    className="appointment" id={props.id}>
+    className="appointment" id={props.id}
+    data-testid="appointment">
       <Header time={props.time}/>
       {mode === EMPTY && <Empty onAdd={() => transition("CREATE")} />}
       {mode === SHOW && (
